@@ -1,0 +1,93 @@
+﻿@using MovieRatingCalculator.Web.Admin.ViewModels
+@model MovieRatingCalculator.Web.Admin.ViewModels.ClusteringViewModel
+
+@{
+    ViewBag.Title = "Clustering algorithms";
+}
+
+<h2>Clustering algorithms</h2>
+<style type="text/css">
+    label {
+        margin-bottom: 5px;
+    }
+    
+    .radio-button-group {
+        border: solid 2px #c8c8c8;
+        padding: 10px 10px 5px 15px;
+    }
+    
+    .inline-element {
+        margin: 10px 20px 0 0;
+        display:inline-block
+    }
+</style>
+@using (Html.BeginForm("RunClusteringAlgs", "Stats", FormMethod.Get))
+{
+    @Html.ValidationSummary(true)
+
+        <div>
+            <div class="radio-button-group inline-element">
+                <label>@Html.RadioButtonFor(model => model.ClusteringDistanceType, 
+                           DistanceType.PearsonCoefficient, true) Pearson correlation coefficient</label>
+                <label>@Html.RadioButtonFor(model => model.ClusteringDistanceType, 
+                           DistanceType.CosDistance, false) Cos distance</label>
+                <label>@Html.RadioButtonFor(model => model.ClusteringDistanceType,
+                           DistanceType.SpearmanCoefficient, false) Spearman correlation coefficient</label>
+            </div>
+   
+            <div class="radio-button-group inline-element">
+                <label>@Html.RadioButtonFor(model => model.ClusteringAlgorithm,
+                           ClusteringAlgType.AgglomerativeClustering, true) Agglomerative clustering</label>
+                <label>@Html.RadioButtonFor(model => model.ClusteringAlgorithm,
+                           ClusteringAlgType.KMedoids, false) K-medoids</label>
+                <label>@Html.RadioButtonFor(model => model.ClusteringAlgorithm,
+                           ClusteringAlgType.Dbscan, false) DBSCAN</label>
+            </div>
+        
+        </div>
+    
+        <div style="margin-top: 20px; width: 48%; display:block">
+            <div style="position:relative; float:left">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.ClustersNumber)</td>
+                            <td>@Html.TextBoxFor(model => model.ClustersNumber)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.Mcp)</td>
+                            <td>@Html.TextBoxFor(model => model.Mcp)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.DisplayNameFor(model => model.Eps)</td>
+                            <td>@Html.TextBoxFor(model => model.Eps)  </td> 
+                        </tr>
+                         <tr>
+                            <td>@Html.DisplayNameFor(model => model.Filter)
+                                <br />(>=)</td>
+                            <td>@Html.TextBoxFor(model => model.Filter)  </td> 
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="radio-button-group" style="position:relative; float:right;margin-top: 20px; ">
+                <label>@Html.RadioButtonFor(model => model.ClusteringDataType,
+                           ObjectType.Users, true) Users</label>
+                <label>@Html.RadioButtonFor(model => model.ClusteringDataType,
+                           ObjectType.Movies , false) Movies</label>
+            </div>
+        </div>
+
+    
+    <div style="clear: both; padding: 20px 0 20px 20px">
+        <input type="submit" value="Run clustering algorithm" name="runAlgBtn"/>
+    </div>
+    
+    <div>
+        <div>@Html.DisplayFor(model => model.Message)</div>
+        <div>@Html.ValidationMessageFor(model => model.ClustersNumber)</div>
+        <div>@Html.ValidationMessageFor(model => model.Mcp)</div>
+        <div>@Html.ValidationMessageFor(model => model.Eps)</div>
+        <div>@Html.ValidationMessageFor(model => model.Filter)</div>
+    </div>
+}

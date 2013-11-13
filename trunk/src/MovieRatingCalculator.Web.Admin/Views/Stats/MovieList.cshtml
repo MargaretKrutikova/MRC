@@ -1,0 +1,27 @@
+﻿@model MovieRatingCalculator.Web.Admin.ViewModels.MovieRatingsViewModel
+
+@{
+    ViewBag.Title = "Movie List";
+}
+
+<h2>Rated Movies: @Model.NumberOfMovies</h2>
+<h2>Total number of Ratings: @Model.NumberOfRatings</h2>
+<h3>@Html.ActionLink("Export Statistics", "ExportStats", "Stats")</h3>
+
+<table>
+    <tr>
+        <th>Movie</th>
+        <th>Original Name</th>
+        <th>Rated by</th>
+        <th>Average rating</th>
+    </tr>
+    @foreach (var movieRatingInfo in Model.MovieRatings)
+    {
+        <tr>
+            <td>@Html.ActionLink(movieRatingInfo.Name, "MovieStats", new { movieId = movieRatingInfo.MovieId })</td>
+            <td>@movieRatingInfo.OriginalName</td>
+            <td class="centered">@movieRatingInfo.RatedByNumberOfUsers</td>
+            <td class="centered">@movieRatingInfo.AverageRating</td>
+        </tr>
+    }
+</table>

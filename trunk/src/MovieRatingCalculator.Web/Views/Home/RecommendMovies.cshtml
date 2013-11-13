@@ -1,0 +1,25 @@
+﻿@model IEnumerable<MovieRatingCalculator.Web.ViewModels.MovieViewModel>
+
+@{
+    ViewBag.Title = "RecommendMovies";
+}
+
+<h2>Recommended for You</h2>
+
+<div style="margin-top: 10px;">
+    
+@if (Model.Any())
+{
+    foreach (var item in Model)
+    {
+        <div style="margin-left: 20px; margin-bottom: 10px; width: 70%">       
+            @Html.Partial("_MovieInfoPartial", item)
+        </div>
+    }
+}
+else
+{
+    <span style=" color: #333; font-size: 1.3em; font-family: 'Comic Sans MS';">Sorry, You have no personal recommendations. Please, rate more 
+    <a href="@Url.Action("SearchMovies", "Home", new { act = "suggest" })" >movies</a> to get them.</span>
+}
+</div>

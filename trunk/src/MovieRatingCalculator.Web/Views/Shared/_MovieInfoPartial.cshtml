@@ -1,0 +1,68 @@
+﻿@model MovieRatingCalculator.Web.ViewModels.MovieViewModel
+
+
+    @if (String.Compare(Model.Name.Trim(), Model.OriginalName.Trim()) != 0)
+    {
+        <span class="movie-original-name">
+            @Html.DisplayFor(modelItem => Model.OriginalName)
+        </span>
+        <span>
+            (<a href="@Model.KinopoiskMovieLink">@Html.DisplayFor(modelItem => Model.Name)</a>)
+        </span>
+    }
+    else
+    {
+        <span class="movie-original-name">
+            <a href="@Model.KinopoiskMovieLink">@Html.DisplayFor(modelItem => Model.OriginalName)</a>
+        </span>
+    } 
+
+    @*        <div>
+                Kinopoisk movie rating : @Html.DisplayFor(ModelItem => Model.KinopoiskMovieRating) 
+                (@Html.DisplayFor(ModelItem => Model.KinopoiskNumberUsersRate)) - <a href="@Model.KinopoiskMovieLink">kinopoisk-link</a>  
+            </div>*@
+    <div>      
+        <span>Year: <span class="emphasized">@Html.DisplayFor(modelItem => Model.ReleaseYear)</span>,</span> 
+        @if (@Model.Duration.HasValue)
+        {
+            <span>Length: @Html.DisplayFor(modelItem => Model.Duration) min,</span>
+        }
+                
+        @if (Model.Countries.Any())
+        {
+            <span> Country: 
+                @foreach (var country in Model.Countries)
+                {
+                    @Html.DisplayFor(modelItem => country)
+                }, 
+            </span>
+        }
+                
+        @if (Model.Genres.Any())
+        {
+            <span>Genres: 
+                @foreach (var genre in Model.Genres)
+                {
+                    <span>@Html.DisplayFor(modelItem => genre),</span>
+                }
+            </span>
+        }
+    </div>
+<div>
+    
+    @if (!String.IsNullOrWhiteSpace(Model.DirectorName))
+    {
+        <span>Director:
+            @Html.DisplayFor(modelItem => Model.DirectorName), </span>
+    }
+            
+    @if (Model.Actors != null)
+    {
+        <span>Actors:
+            @foreach (var actor in Model.Actors)
+            {
+                <span>@Html.DisplayFor(modelItem => actor),</span>
+            }
+        </span>
+    }
+</div>

@@ -1,0 +1,26 @@
+﻿@model MovieRatingCalculator.Web.Admin.ViewModels.UserStatsViewModel
+
+@{
+    ViewBag.Title = "User Info";
+}
+
+<h2>User @Model.Email (@Model.FirstName @Model.LastName)</h2>
+
+<table>
+    <tr>
+        <th>Movie</th>
+        <th>Original Name</th>
+        <th>Rating</th>
+        <th>KinopoiskLink</th>
+    </tr>
+    
+    @foreach (var movie in Model.RatedMovies)
+    {
+        <tr>
+            <td>@Html.ActionLink(movie.Name, "MovieStats", new { movieId = movie.MovieId })</td>
+            <td>@movie.OriginalName</td>
+            <td>@movie.UserRating</td>
+            <td><a href="@movie.KinopoiskLink">Kinopoisk</a></td>
+        </tr>
+    }
+</table>

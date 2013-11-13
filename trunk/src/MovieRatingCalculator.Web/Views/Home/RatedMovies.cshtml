@@ -1,0 +1,84 @@
+﻿@model MovieRatingCalculator.Web.ViewModels.UserRatedMoviesViewModel
+
+@{
+    ViewBag.Title = "RatedMovies";
+}
+@Styles.Render("~/Content/jqplot")
+@Scripts.Render("~/bundles/jqplot")
+<script type="text/javascript" src="@Url.Content("~/Scripts/rated-movies.js")"></script>
+
+<h2>Your Rated Movies</h2>
+<h3>Total ratings: @Model.RatedMovies.Count</h3>
+
+@using (Html.BeginForm("RatedMovies", "Home", FormMethod.Get, new { @autocomplete = "off" }))
+{
+    @Html.ValidationSummary(true)
+
+    <div style="margin-bottom: 5px; margin-top: 10px; width: 540px; clear: both">
+        
+        <div style="margin-top: 10px; height: 35px;">
+            <span id="year-link">Enter year:</span>                   
+            <span id="year-filter">                    
+                @Html.TextBoxFor(model => model.y, new {@id = "year-filter-field"})               
+                <input type="submit" value="Search"/>
+            </span>
+        </div>
+        <div> @Html.ValidationMessageFor(m => m.y)</div>
+    </div>
+}
+
+@if (Model.RatedMovies.Any())
+{
+    <div class="movie-list-header rating">My Rating<br /><a href="#" class="enable-rating-link">Edit</a></div>
+    <div class="movie-list-header movie">Movie</div>
+    <div class="movie-list-header total-ratings">Total ratings</div>
+    <div class="movie-list-header same-rating-users">Users with same rating</div>
+}
+   
+@foreach (var item in Model.RatedMovies)
+{
+    <div>
+        <div class="movie-rate-info rating editable" style="display:none">
+            <input type="hidden" value="@item.Id" id="movie-id" />
+            @Html.DropDownList("rate-list", item.MovieRateList, new { @class = "movie-rate-list" })
+            <br />
+            <span id="message-text" class="rating-message"></span>
+        </div>
+
+        <div class="movie-rate-info rating readonly">
+            <span class="rating-text rating-color-@item.UserMovieRate">
+                @item.UserMovieRate
+            </span>
+        </div>
+    
+        <div class="rated-movie movie">
+            <span class="movie-original-name">
+                @Html.DisplayFor(modelItem => item.OriginalName)
+                (@Html.DisplayFor(modelItem => item.ReleaseYear))
+            </span>
+            @if (item.Name.Trim() != item.OriginalName.Trim())
+            {
+                <br />
+                <span>@Html.DisplayFor(modelItem => item.Name)</span>
+            }
+        </div>
+
+        <div class="total-ratings" style="font-size:1.1em; font-weight: normal; padding-top:10px;">
+            <span id="total-rates-number" class="emphasized">@Html.DisplayFor(modelItem => item.TotalRatesNumber)</span>
+        </div>
+        
+        <div class="same-rating-users" style="font-size:1.1em; font-weight: normal; padding-top:10px;">
+            <span id="users-same-rating" class="emphasized">@Html.DisplayFor(modelItem => item.NumberUsersWithSameRating)</span>
+        </div>
+        
+        <div id="rating-distribution-container">
+            <a class="rating-disrtibution-link show">Show rating distribution</a>
+            <div id="chart-ratings-distribution-@item.Id.ToString()" style="width:400px;height:200px;" class="hidden"></div>
+        </div>
+    </div>
+}
+
+<div id="loadingDiv" class="loader"></div>
+<input type="hidden" value="@Url.Action("SaveMovieRate", "Home")" id="save-ratings-url"/>
+<input type="hidden" value="@Url.Action("GetMovieRatingDistribution", "Home")" id="rating-distribution-url"/>
+<div id="rating-distribution"></div>

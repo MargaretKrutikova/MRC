@@ -1,0 +1,114 @@
+﻿@model MovieRatingCalculator.Web.ViewModels.SearchMovieViewModel
+
+@{
+    ViewBag.Title = "Movies";
+}
+
+<script type="text/javascript" src="@Url.Content("~/Scripts/search-movies.js")"></script>
+
+<h2 >Find and rate your favorite movies</h2>
+@if (!string.IsNullOrWhiteSpace(Model.FilterField))
+{
+    <span class="suggested-movie-link">or have a look at the 
+        <a href="@Url.Action("SearchMovies")" class="suggested-link">suggested movies</a> to rate</span>
+}
+@if (!Model.IsUserLoggedIn)
+{
+    <h4>
+        NOTE: @Html.ActionLink("Log in with your email in order to be able to rate movies", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
+    </h4>
+}
+
+@using (Html.BeginForm("SearchMovies", "Home", FormMethod.Get, new { @autocomplete = "off" }))
+{
+    @Html.ValidationSummary(true)
+
+        <div style="margin-bottom: 5px; margin-top: 10px; width :540px; clear:both ">
+            
+                 <div>@Html.EditorFor(model => model.f)           
+                     <input type="submit" value="Search"/>
+                     </div>
+                <div style="margin-top: 10px; height: 35px;">
+                    <span id="year-link">+enter year</span>                   
+                    <span class="year-filter" >                    
+                        @Html.TextBoxFor(model => model.y, new { @id="year-filter-field" })
+                        @Html.ValidationMessageFor(m => m.y)
+                    </span>
+                </div>
+        @Html.HiddenFor(model => model.act)
+        </div>
+}   
+
+@if (Model.SearchResultMovieList.Any())
+{
+    if (Model.IsUserLoggedIn)
+    {
+        if (Model.act == "suggest")
+        {  
+            <div class="suggested-movie-title" style="clear:both">Suggested movies to rate:</div>
+        }
+        <div class="movie-list-header rating">Rating</div>
+        <div class="movie-list-header movie">Movie</div>
+    }
+}
+ 
+<div style="margin-bottom: 80px;">   
+@foreach (var item in Model.SearchResultMovieList)
+{
+    <div style="clear:both" class="movie-div">
+        @if (Model.IsUserLoggedIn)
+        {
+            <div class="movie-rate-info">
+                <input type="hidden" value="@item.Id" id="movie-id" />
+                @Html.DropDownList("rate-list", item.MovieRateList, new { @class = "movie-rate-list" })
+                <br />
+                <span id="message-text" class="rating-message"></span>
+            </div>
+        }
+        <div class="movie-info">           
+            @Html.Partial("_MovieInfoPartial", item)
+        </div>
+    </div>
+}
+</div>
+<div id="loadingDiv" class="loader"></div>
+<input type="hidden" value="@Url.Action("SaveMovieRate", "Home")" id="save-ratings-url"/>
+
+@if (Model.SearchResultMovieList.Any() && Model.PageCount > 1)
+{
+    <div style="clear: both; text-align: center; margin-bottom: 10px;">
+        @if(Model.CurrentPageIndex != 1)
+        {
+            <span style="padding-right:5px;">
+                @Html.ActionLink("Previous", "SearchMovies", new { page = @Model.CurrentPageIndex - 1, f = @Model.f, y = @Model.y, act = @Model.act })
+            </span>
+        }
+        @if (Model.StartPageIndex != 1)
+        {           
+            @Html.ActionLink("1", "SearchMovies", new { page = 1, f = @Model.f, y = @Model.y, act = @Model.act })
+            <span>...</span>
+        }
+        @for (int i = Model.StartPageIndex; i <= Model.EndIndexPage; i++)
+        {
+            if (i != Model.CurrentPageIndex)
+            {
+                @Html.ActionLink(@i.ToString(), "SearchMovies", new { page = @i, f = @Model.f, y = @Model.y, act = @Model.act })
+            }
+            else
+            {
+                <span>@Model.CurrentPageIndex</span>
+            }
+        }
+        @if (Model.EndIndexPage != Model.PageCount)
+        {
+            <span>...</span>
+            @Html.ActionLink(@Model.PageCount.ToString(), "SearchMovies", new { page = @Model.PageCount, f = @Model.f, y = @Model.y, act = @Model.act })
+        }
+        @if (Model.CurrentPageIndex != Model.PageCount)
+        {
+            <span style="padding-left:5px;">
+                @Html.ActionLink("Next", "SearchMovies", new { page = @Model.CurrentPageIndex + 1, f = @Model.f, y = @Model.y, act = @Model.act })
+            </span>
+        }
+    </div>
+}

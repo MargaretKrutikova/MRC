@@ -1,0 +1,735 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MovieRatingCalculatorModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="MovieRatingCalculatorModelStoreContainer">
+          <EntitySet Name="Countries" EntityType="MovieRatingCalculatorModel.Store.Countries" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Genres" EntityType="MovieRatingCalculatorModel.Store.Genres" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MovieGenres" EntityType="MovieRatingCalculatorModel.Store.MovieGenres" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MovieParticipants" EntityType="MovieRatingCalculatorModel.Store.MovieParticipants" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MovieParticipantTypes" EntityType="MovieRatingCalculatorModel.Store.MovieParticipantTypes" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MovieProductionCountries" EntityType="MovieRatingCalculatorModel.Store.MovieProductionCountries" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MovieProductionParticipants" EntityType="MovieRatingCalculatorModel.Store.MovieProductionParticipants" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="MovieRatings" EntityType="MovieRatingCalculatorModel.Store.MovieRatings" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Movies" EntityType="MovieRatingCalculatorModel.Store.Movies" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ParticipantTypes" EntityType="MovieRatingCalculatorModel.Store.ParticipantTypes" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserLoginHistory" EntityType="MovieRatingCalculatorModel.Store.UserLoginHistory" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Users" EntityType="MovieRatingCalculatorModel.Store.Users" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_GenreMovie_Genre" Association="MovieRatingCalculatorModel.Store.FK_GenreMovie_Genre">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="MovieGenres" EntitySet="MovieGenres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GenreMovie_Movie" Association="MovieRatingCalculatorModel.Store.FK_GenreMovie_Movie">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="MovieGenres" EntitySet="MovieGenres" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieCountry_Country" Association="MovieRatingCalculatorModel.Store.FK_MovieCountry_Country">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="MovieProductionCountries" EntitySet="MovieProductionCountries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieCountry_Movie" Association="MovieRatingCalculatorModel.Store.FK_MovieCountry_Movie">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="MovieProductionCountries" EntitySet="MovieProductionCountries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieParticipantTypeMovieParticipant" Association="MovieRatingCalculatorModel.Store.FK_MovieParticipantTypeMovieParticipant">
+            <End Role="MovieParticipants" EntitySet="MovieParticipants" />
+            <End Role="MovieParticipantTypes" EntitySet="MovieParticipantTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieParticipantTypeParticipantType" Association="MovieRatingCalculatorModel.Store.FK_MovieParticipantTypeParticipantType">
+            <End Role="ParticipantTypes" EntitySet="ParticipantTypes" />
+            <End Role="MovieParticipantTypes" EntitySet="MovieParticipantTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieProductionParticipantMovieParticipantType" Association="MovieRatingCalculatorModel.Store.FK_MovieProductionParticipantMovieParticipantType">
+            <End Role="MovieParticipantTypes" EntitySet="MovieParticipantTypes" />
+            <End Role="MovieProductionParticipants" EntitySet="MovieProductionParticipants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieProductionParticipantTypeMovie" Association="MovieRatingCalculatorModel.Store.FK_MovieProductionParticipantTypeMovie">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="MovieProductionParticipants" EntitySet="MovieProductionParticipants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieRatingMovie" Association="MovieRatingCalculatorModel.Store.FK_MovieRatingMovie">
+            <End Role="Movies" EntitySet="Movies" />
+            <End Role="MovieRatings" EntitySet="MovieRatings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieRatingUser" Association="MovieRatingCalculatorModel.Store.FK_MovieRatingUser">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="MovieRatings" EntitySet="MovieRatings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserLoginHistory_Users" Association="MovieRatingCalculatorModel.Store.FK_UserLoginHistory_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserLoginHistory" EntitySet="UserLoginHistory" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Countries">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Genres">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MovieGenres">
+          <Key>
+            <PropertyRef Name="MovieId" />
+            <PropertyRef Name="GenreId" />
+          </Key>
+          <Property Name="MovieId" Type="int" Nullable="false" />
+          <Property Name="GenreId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MovieParticipants">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="MovieParticipantTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MovieParticipantId" Type="int" Nullable="false" />
+          <Property Name="ParticipantTypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MovieProductionCountries">
+          <Key>
+            <PropertyRef Name="MovieId" />
+            <PropertyRef Name="CountryId" />
+          </Key>
+          <Property Name="MovieId" Type="int" Nullable="false" />
+          <Property Name="CountryId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MovieProductionParticipants">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MovieId" Type="int" Nullable="false" />
+          <Property Name="MovieParticipantTypeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MovieRatings">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="MovieId" Type="int" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="Rating" Type="smallint" Nullable="false" />
+          <Property Name="UpdateDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Movies">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="OriginalName" Type="nvarchar(max)" />
+          <Property Name="ReleaseYear" Type="smallint" Nullable="false" />
+          <Property Name="Duration" Type="smallint" />
+          <Property Name="KinopoiskMovieId" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="KinopoiskMovieRating" Type="float" />
+          <Property Name="KinopoiskNumberUsersRate" Type="int" />
+          <Property Name="ClusterId" Type="smallint" />
+        </EntityType>
+        <EntityType Name="ParticipantTypes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="UserLoginHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="IpAddress" Type="nvarchar" MaxLength="20" />
+          <Property Name="LoginDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar(max)" />
+          <Property Name="LastName" Type="nvarchar(max)" />
+          <Property Name="ClusterId" Type="smallint" />
+        </EntityType>
+        <Association Name="FK_GenreMovie_Genre">
+          <End Role="Genres" Type="MovieRatingCalculatorModel.Store.Genres" Multiplicity="1" />
+          <End Role="MovieGenres" Type="MovieRatingCalculatorModel.Store.MovieGenres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Genres">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MovieGenres">
+              <PropertyRef Name="GenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GenreMovie_Movie">
+          <End Role="Movies" Type="MovieRatingCalculatorModel.Store.Movies" Multiplicity="1" />
+          <End Role="MovieGenres" Type="MovieRatingCalculatorModel.Store.MovieGenres" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MovieGenres">
+              <PropertyRef Name="MovieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieCountry_Country">
+          <End Role="Countries" Type="MovieRatingCalculatorModel.Store.Countries" Multiplicity="1" />
+          <End Role="MovieProductionCountries" Type="MovieRatingCalculatorModel.Store.MovieProductionCountries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Countries">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MovieProductionCountries">
+              <PropertyRef Name="CountryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieCountry_Movie">
+          <End Role="Movies" Type="MovieRatingCalculatorModel.Store.Movies" Multiplicity="1" />
+          <End Role="MovieProductionCountries" Type="MovieRatingCalculatorModel.Store.MovieProductionCountries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MovieProductionCountries">
+              <PropertyRef Name="MovieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieParticipantTypeMovieParticipant">
+          <End Role="MovieParticipants" Type="MovieRatingCalculatorModel.Store.MovieParticipants" Multiplicity="1" />
+          <End Role="MovieParticipantTypes" Type="MovieRatingCalculatorModel.Store.MovieParticipantTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MovieParticipants">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MovieParticipantTypes">
+              <PropertyRef Name="MovieParticipantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieParticipantTypeParticipantType">
+          <End Role="ParticipantTypes" Type="MovieRatingCalculatorModel.Store.ParticipantTypes" Multiplicity="1" />
+          <End Role="MovieParticipantTypes" Type="MovieRatingCalculatorModel.Store.MovieParticipantTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParticipantTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MovieParticipantTypes">
+              <PropertyRef Name="ParticipantTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieProductionParticipantMovieParticipantType">
+          <End Role="MovieParticipantTypes" Type="MovieRatingCalculatorModel.Store.MovieParticipantTypes" Multiplicity="1" />
+          <End Role="MovieProductionParticipants" Type="MovieRatingCalculatorModel.Store.MovieProductionParticipants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MovieParticipantTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MovieProductionParticipants">
+              <PropertyRef Name="MovieParticipantTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieProductionParticipantTypeMovie">
+          <End Role="Movies" Type="MovieRatingCalculatorModel.Store.Movies" Multiplicity="1" />
+          <End Role="MovieProductionParticipants" Type="MovieRatingCalculatorModel.Store.MovieProductionParticipants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MovieProductionParticipants">
+              <PropertyRef Name="MovieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieRatingMovie">
+          <End Role="Movies" Type="MovieRatingCalculatorModel.Store.Movies" Multiplicity="1" />
+          <End Role="MovieRatings" Type="MovieRatingCalculatorModel.Store.MovieRatings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movies">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MovieRatings">
+              <PropertyRef Name="MovieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieRatingUser">
+          <End Role="Users" Type="MovieRatingCalculatorModel.Store.Users" Multiplicity="1" />
+          <End Role="MovieRatings" Type="MovieRatingCalculatorModel.Store.MovieRatings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MovieRatings">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserLoginHistory_Users">
+          <End Role="Users" Type="MovieRatingCalculatorModel.Store.Users" Multiplicity="1" />
+          <End Role="UserLoginHistory" Type="MovieRatingCalculatorModel.Store.UserLoginHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLoginHistory">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MovieRatingCalculatorModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="MovieRatingCalculatorEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="MovieParticipantTypes" EntityType="MovieRatingCalculatorModel.MovieParticipantType" />
+          <EntitySet Name="Users" EntityType="MovieRatingCalculatorModel.User" />
+          <EntitySet Name="Countries" EntityType="MovieRatingCalculatorModel.Country" />
+          <EntitySet Name="Genres" EntityType="MovieRatingCalculatorModel.Genre" />
+          <EntitySet Name="MovieParticipants" EntityType="MovieRatingCalculatorModel.MovieParticipant" />
+          <EntitySet Name="Movies" EntityType="MovieRatingCalculatorModel.Movie" />
+          <EntitySet Name="ParticipantTypes" EntityType="MovieRatingCalculatorModel.ParticipantType" />
+          <AssociationSet Name="FK_MovieParticipantTypeMovieParticipant" Association="MovieRatingCalculatorModel.FK_MovieParticipantTypeMovieParticipant">
+            <End Role="MovieParticipants" EntitySet="MovieParticipants" />
+            <End Role="MovieParticipantType" EntitySet="MovieParticipantTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieParticipantTypeParticipantType" Association="MovieRatingCalculatorModel.FK_MovieParticipantTypeParticipantType">
+            <End Role="ParticipantTypes" EntitySet="ParticipantTypes" />
+            <End Role="MovieParticipantType" EntitySet="MovieParticipantTypes" />
+          </AssociationSet>
+          <AssociationSet Name="MovieGenres" Association="MovieRatingCalculatorModel.MovieGenres">
+            <End Role="Genres" EntitySet="Genres" />
+            <End Role="Movies" EntitySet="Movies" />
+          </AssociationSet>
+          <AssociationSet Name="MovieProductionCountries" Association="MovieRatingCalculatorModel.MovieProductionCountries">
+            <End Role="Countries" EntitySet="Countries" />
+            <End Role="Movies" EntitySet="Movies" />
+          </AssociationSet>
+          <EntitySet Name="MovieProductionParticipants" EntityType="MovieRatingCalculatorModel.MovieProductionParticipant" />
+          <AssociationSet Name="FK_MovieProductionParticipantMovieParticipantType" Association="MovieRatingCalculatorModel.FK_MovieProductionParticipantMovieParticipantType">
+            <End Role="MovieParticipantType" EntitySet="MovieParticipantTypes" />
+            <End Role="MovieProductionParticipants" EntitySet="MovieProductionParticipants" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieProductionParticipantTypeMovie" Association="MovieRatingCalculatorModel.FK_MovieProductionParticipantTypeMovie">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="MovieProductionParticipants" EntitySet="MovieProductionParticipants" />
+          </AssociationSet>
+          <EntitySet Name="MovieRatings" EntityType="MovieRatingCalculatorModel.MovieRating" />
+          <AssociationSet Name="FK_MovieRatingMovie" Association="MovieRatingCalculatorModel.FK_MovieRatingMovie">
+            <End Role="Movie" EntitySet="Movies" />
+            <End Role="MovieRatings" EntitySet="MovieRatings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MovieRatingUser" Association="MovieRatingCalculatorModel.FK_MovieRatingUser">
+            <End Role="User" EntitySet="Users" />
+            <End Role="MovieRatings" EntitySet="MovieRatings" />
+          </AssociationSet>
+          <EntitySet Name="UserLoginHistory" EntityType="MovieRatingCalculatorModel.UserLoginHistory" />
+          <AssociationSet Name="FK_UserLoginHistory_Users" Association="MovieRatingCalculatorModel.FK_UserLoginHistory_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="UserLoginHistory" EntitySet="UserLoginHistory" />
+          </AssociationSet>
+          </EntityContainer>
+        <EntityType Name="MovieParticipantType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MovieParticipantId" Type="Int32" Nullable="false" />
+          <Property Name="ParticipantTypeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="MovieParticipant" Relationship="MovieRatingCalculatorModel.FK_MovieParticipantTypeMovieParticipant" FromRole="MovieParticipantType" ToRole="MovieParticipants" />
+          <NavigationProperty Name="ParticipantType" Relationship="MovieRatingCalculatorModel.FK_MovieParticipantTypeParticipantType" FromRole="MovieParticipantType" ToRole="ParticipantTypes" />
+          <NavigationProperty Name="MovieProductionParticipants" Relationship="MovieRatingCalculatorModel.FK_MovieProductionParticipantMovieParticipantType" FromRole="MovieParticipantType" ToRole="MovieProductionParticipants" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="FirstName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="MovieRatings" Relationship="MovieRatingCalculatorModel.FK_MovieRatingUser" FromRole="User" ToRole="MovieRatings" />
+          <NavigationProperty Name="UserLoginHistory" Relationship="MovieRatingCalculatorModel.FK_UserLoginHistory_Users" FromRole="User" ToRole="UserLoginHistory" />
+          <Property Type="Int16" Name="ClusterId" />
+        </EntityType>
+        <EntityType Name="Country">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Movies" Relationship="MovieRatingCalculatorModel.MovieProductionCountries" FromRole="Countries" ToRole="Movies" />
+        </EntityType>
+        <EntityType Name="Genre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Movies" Relationship="MovieRatingCalculatorModel.MovieGenres" FromRole="Genres" ToRole="Movies" />
+        </EntityType>
+        <EntityType Name="MovieParticipant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MovieParticipantTypes" Relationship="MovieRatingCalculatorModel.FK_MovieParticipantTypeMovieParticipant" FromRole="MovieParticipants" ToRole="MovieParticipantType" />
+        </EntityType>
+        <EntityType Name="Movie">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="OriginalName" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Int16" Name="ReleaseYear" Nullable="false" />
+          <Property Type="Int16" Name="Duration" />
+          <Property Type="String" Name="KinopoiskMovieId" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Double" Name="KinopoiskMovieRating" />
+          <Property Type="Int32" Name="KinopoiskNumberUsersRate" />
+          <NavigationProperty Name="Genres" Relationship="MovieRatingCalculatorModel.MovieGenres" FromRole="Movies" ToRole="Genres" />
+          <NavigationProperty Name="Countries" Relationship="MovieRatingCalculatorModel.MovieProductionCountries" FromRole="Movies" ToRole="Countries" />
+          <NavigationProperty Name="MovieProductionParticipants" Relationship="MovieRatingCalculatorModel.FK_MovieProductionParticipantTypeMovie" FromRole="Movie" ToRole="MovieProductionParticipants" />
+          <NavigationProperty Name="MovieRatings" Relationship="MovieRatingCalculatorModel.FK_MovieRatingMovie" FromRole="Movie" ToRole="MovieRatings" />
+          <Property Type="Int16" Name="ClusterId" />
+        </EntityType>
+        <EntityType Name="ParticipantType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="MovieParticipantTypes" Relationship="MovieRatingCalculatorModel.FK_MovieParticipantTypeParticipantType" FromRole="ParticipantTypes" ToRole="MovieParticipantType" />
+        </EntityType>
+        <Association Name="FK_MovieParticipantTypeMovieParticipant">
+          <End Type="MovieRatingCalculatorModel.MovieParticipant" Role="MovieParticipants" Multiplicity="1" />
+          <End Type="MovieRatingCalculatorModel.MovieParticipantType" Role="MovieParticipantType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MovieParticipants">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MovieParticipantType">
+              <PropertyRef Name="MovieParticipantId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieParticipantTypeParticipantType">
+          <End Type="MovieRatingCalculatorModel.ParticipantType" Role="ParticipantTypes" Multiplicity="1" />
+          <End Type="MovieRatingCalculatorModel.MovieParticipantType" Role="MovieParticipantType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ParticipantTypes">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MovieParticipantType">
+              <PropertyRef Name="ParticipantTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="MovieGenres">
+          <End Type="MovieRatingCalculatorModel.Genre" Role="Genres" Multiplicity="*" />
+          <End Type="MovieRatingCalculatorModel.Movie" Role="Movies" Multiplicity="*" />
+        </Association>
+        <Association Name="MovieProductionCountries">
+          <End Type="MovieRatingCalculatorModel.Country" Role="Countries" Multiplicity="*" />
+          <End Type="MovieRatingCalculatorModel.Movie" Role="Movies" Multiplicity="*" />
+        </Association>
+        <EntityType Name="MovieProductionParticipant">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="MovieId" Nullable="false" />
+          <Property Type="Int32" Name="MovieParticipantTypeId" Nullable="false" />
+          <NavigationProperty Name="MovieParticipantType" Relationship="MovieRatingCalculatorModel.FK_MovieProductionParticipantMovieParticipantType" FromRole="MovieProductionParticipants" ToRole="MovieParticipantType" />
+          <NavigationProperty Name="Movie" Relationship="MovieRatingCalculatorModel.FK_MovieProductionParticipantTypeMovie" FromRole="MovieProductionParticipants" ToRole="Movie" />
+        </EntityType>
+        <Association Name="FK_MovieProductionParticipantMovieParticipantType">
+          <End Type="MovieRatingCalculatorModel.MovieParticipantType" Role="MovieParticipantType" Multiplicity="1" />
+          <End Type="MovieRatingCalculatorModel.MovieProductionParticipant" Role="MovieProductionParticipants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MovieParticipantType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MovieProductionParticipants">
+              <PropertyRef Name="MovieParticipantTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieProductionParticipantTypeMovie">
+          <End Type="MovieRatingCalculatorModel.Movie" Role="Movie" Multiplicity="1" />
+          <End Type="MovieRatingCalculatorModel.MovieProductionParticipant" Role="MovieProductionParticipants" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MovieProductionParticipants">
+              <PropertyRef Name="MovieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="MovieRating">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="MovieId" Nullable="false" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="Int16" Name="Rating" Nullable="false" />
+          <Property Type="DateTime" Name="UpdateDate" Nullable="false" />
+          <NavigationProperty Name="Movie" Relationship="MovieRatingCalculatorModel.FK_MovieRatingMovie" FromRole="MovieRatings" ToRole="Movie" />
+          <NavigationProperty Name="User" Relationship="MovieRatingCalculatorModel.FK_MovieRatingUser" FromRole="MovieRatings" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_MovieRatingMovie">
+          <End Type="MovieRatingCalculatorModel.Movie" Role="Movie" Multiplicity="1" />
+          <End Type="MovieRatingCalculatorModel.MovieRating" Role="MovieRatings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Movie">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MovieRatings">
+              <PropertyRef Name="MovieId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MovieRatingUser">
+          <End Type="MovieRatingCalculatorModel.User" Role="User" Multiplicity="1" />
+          <End Type="MovieRatingCalculatorModel.MovieRating" Role="MovieRatings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MovieRatings">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="UserLoginHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="UserId" Nullable="false" />
+          <Property Type="String" Name="IpAddress" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="LoginDate" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="MovieRatingCalculatorModel.FK_UserLoginHistory_Users" FromRole="UserLoginHistory" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_UserLoginHistory_Users">
+          <End Type="MovieRatingCalculatorModel.User" Role="User" Multiplicity="1" />
+          <End Type="MovieRatingCalculatorModel.UserLoginHistory" Role="UserLoginHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="UserLoginHistory">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MovieRatingCalculatorModelStoreContainer" CdmEntityContainer="MovieRatingCalculatorEntities">
+          <EntitySetMapping Name="MovieParticipantTypes"><EntityTypeMapping TypeName="MovieRatingCalculatorModel.MovieParticipantType"><MappingFragment StoreEntitySet="MovieParticipantTypes">
+            <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="MovieParticipantId" ColumnName="MovieParticipantId" />
+            <ScalarProperty Name="ParticipantTypeId" ColumnName="ParticipantTypeId" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Users"><EntityTypeMapping TypeName="MovieRatingCalculatorModel.User"><MappingFragment StoreEntitySet="Users">
+            <ScalarProperty Name="ClusterId" ColumnName="ClusterId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+            <ScalarProperty Name="Email" ColumnName="Email" />
+            <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+            <ScalarProperty Name="LastName" ColumnName="LastName" />
+          </MappingFragment></EntityTypeMapping></EntitySetMapping>
+          <EntitySetMapping Name="Countries">
+            <EntityTypeMapping TypeName="MovieRatingCalculatorModel.Country">
+              <MappingFragment StoreEntitySet="Countries">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Genres">
+            <EntityTypeMapping TypeName="MovieRatingCalculatorModel.Genre">
+              <MappingFragment StoreEntitySet="Genres">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MovieParticipants">
+            <EntityTypeMapping TypeName="MovieRatingCalculatorModel.MovieParticipant">
+              <MappingFragment StoreEntitySet="MovieParticipants">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movies">
+            <EntityTypeMapping TypeName="MovieRatingCalculatorModel.Movie">
+              <MappingFragment StoreEntitySet="Movies">
+                <ScalarProperty Name="ClusterId" ColumnName="ClusterId" />
+                <ScalarProperty Name="KinopoiskNumberUsersRate" ColumnName="KinopoiskNumberUsersRate" />
+                <ScalarProperty Name="KinopoiskMovieRating" ColumnName="KinopoiskMovieRating" />
+                <ScalarProperty Name="KinopoiskMovieId" ColumnName="KinopoiskMovieId" />
+                <ScalarProperty Name="Duration" ColumnName="Duration" />
+                <ScalarProperty Name="ReleaseYear" ColumnName="ReleaseYear" />
+                <ScalarProperty Name="OriginalName" ColumnName="OriginalName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ParticipantTypes">
+            <EntityTypeMapping TypeName="MovieRatingCalculatorModel.ParticipantType">
+              <MappingFragment StoreEntitySet="ParticipantTypes">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="MovieGenres" TypeName="MovieRatingCalculatorModel.MovieGenres" StoreEntitySet="MovieGenres">
+            <EndProperty Name="Movies">
+              <ScalarProperty Name="Id" ColumnName="MovieId" />
+            </EndProperty>
+            <EndProperty Name="Genres">
+              <ScalarProperty Name="Id" ColumnName="GenreId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="MovieProductionCountries" TypeName="MovieRatingCalculatorModel.MovieProductionCountries" StoreEntitySet="MovieProductionCountries">
+            <EndProperty Name="Movies">
+              <ScalarProperty Name="Id" ColumnName="MovieId" />
+            </EndProperty>
+            <EndProperty Name="Countries">
+              <ScalarProperty Name="Id" ColumnName="CountryId" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <EntitySetMapping Name="MovieProductionParticipants">
+            <EntityTypeMapping TypeName="MovieRatingCalculatorModel.MovieProductionParticipant">
+              <MappingFragment StoreEntitySet="MovieProductionParticipants">
+                <ScalarProperty Name="MovieParticipantTypeId" ColumnName="MovieParticipantTypeId" />
+                <ScalarProperty Name="MovieId" ColumnName="MovieId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MovieRatings">
+            <EntityTypeMapping TypeName="MovieRatingCalculatorModel.MovieRating">
+              <MappingFragment StoreEntitySet="MovieRatings">
+                <ScalarProperty Name="UpdateDate" ColumnName="UpdateDate" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="MovieId" ColumnName="MovieId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLoginHistory">
+            <EntityTypeMapping TypeName="MovieRatingCalculatorModel.UserLoginHistory">
+              <MappingFragment StoreEntitySet="UserLoginHistory">
+                <ScalarProperty Name="LoginDate" ColumnName="LoginDate" />
+                <ScalarProperty Name="IpAddress" ColumnName="IpAddress" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="MovieRatingCalculatorModel">
+        <EntityTypeShape EntityType="MovieRatingCalculatorModel.MovieParticipantType" Width="2.125" PointX="4.5" PointY="4.375" Height="2.1725878906249996" IsExpanded="true" />
+        <EntityTypeShape EntityType="MovieRatingCalculatorModel.User" Width="1.5" PointX="8.75" PointY="1.25" Height="1.9802864583333317" IsExpanded="true" />
+        <EntityTypeShape EntityType="MovieRatingCalculatorModel.Country" Width="1.5" PointX="0.875" PointY="0.625" Height="1.5956835937499996" />
+        <EntityTypeShape EntityType="MovieRatingCalculatorModel.Genre" Width="1.5" PointX="0.75" PointY="2.5" Height="1.5956835937500031" />
+        <EntityTypeShape EntityType="MovieRatingCalculatorModel.MovieParticipant" Width="2.25" PointX="7.625" PointY="4" Height="1.5956835937500031" />
+        <EntityTypeShape EntityType="MovieRatingCalculatorModel.Movie" Width="2.5" PointX="3.5" PointY="0.5" Height="3.3263964843750031" />
+        <EntityTypeShape EntityType="MovieRatingCalculatorModel.ParticipantType" Width="2.125" PointX="7.375" PointY="6" Height="1.5956835937500031" />
+        <AssociationConnector Association="MovieRatingCalculatorModel.FK_MovieParticipantTypeMovieParticipant" >
+          <ConnectorPoint PointX="7.625" PointY="4.9853417968750016" />
+          <ConnectorPoint PointX="6.625" PointY="4.9853417968750016" />
+        </AssociationConnector>
+        <AssociationConnector Association="MovieRatingCalculatorModel.FK_MovieParticipantTypeParticipantType" >
+          <ConnectorPoint PointX="7.375" PointY="6.2737939453125" />
+          <ConnectorPoint PointX="6.625" PointY="6.2737939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="MovieRatingCalculatorModel.MovieGenres" >
+          <ConnectorPoint PointX="2.25" PointY="3.1631982421875" />
+          <ConnectorPoint PointX="2.8229166666666665" PointY="3.1631982421874993" />
+          <ConnectorPoint PointX="2.9895833333333335" PointY="3.1631982421875" />
+          <ConnectorPoint PointX="3.5" PointY="3.1631982421875" />
+        </AssociationConnector>
+        <AssociationConnector Association="MovieRatingCalculatorModel.MovieProductionCountries" >
+          <ConnectorPoint PointX="2.375" PointY="1.4228417968749998" />
+          <ConnectorPoint PointX="3.5" PointY="1.4228417968749998" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="MovieRatingCalculatorModel.MovieProductionParticipant" Width="2.5" PointX="0.875" PointY="4.625" Height="1.9802864583333317" />
+        <AssociationConnector Association="MovieRatingCalculatorModel.FK_MovieProductionParticipantMovieParticipantType" >
+          <ConnectorPoint PointX="4.5" PointY="5.5862939453125" />
+          <ConnectorPoint PointX="3.375" PointY="5.5862939453125" />
+        </AssociationConnector>
+        <AssociationConnector Association="MovieRatingCalculatorModel.FK_MovieProductionParticipantTypeMovie" >
+          <ConnectorPoint PointX="3.5" PointY="2.360341796875" />
+          <ConnectorPoint PointX="2.90625" PointY="2.360341796875" />
+          <ConnectorPoint PointX="2.90625" PointY="4.625" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="MovieRatingCalculatorModel.MovieRating" Width="1.5" PointX="6.75" PointY="1" Height="2.3648893229166674" />
+        <AssociationConnector Association="MovieRatingCalculatorModel.FK_MovieRatingMovie" >
+          <ConnectorPoint PointX="6" PointY="2.1824446614583337" />
+          <ConnectorPoint PointX="6.75" PointY="2.1824446614583337" />
+        </AssociationConnector>
+        <AssociationConnector Association="MovieRatingCalculatorModel.FK_MovieRatingUser" >
+          <ConnectorPoint PointX="8.75" PointY="2.3074446614583337" />
+          <ConnectorPoint PointX="8.25" PointY="2.3074446614583337" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="MovieRatingCalculatorModel.UserLoginHistory" Width="2" PointX="11" PointY="1" Height="1.9802864583333317" />
+        <AssociationConnector Association="MovieRatingCalculatorModel.FK_UserLoginHistory_Users" >
+          <ConnectorPoint PointX="10.25" PointY="2.1151432291666659" />
+          <ConnectorPoint PointX="11" PointY="2.1151432291666659" />
+        </AssociationConnector>
+        </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,30 @@
+﻿@model MovieRatingCalculator.Web.Admin.ViewModels.UserRatingsViewModel
+
+@{
+    ViewBag.Title = "User List";
+}
+
+<h2>Total Users: @Model.NumberOfUsers</h2>
+<h2>Total Ratings: @Model.NumberOfRatings</h2>
+
+<table>
+    <tr>
+        <th>Email</th>
+        <th>Name</th>
+        <th>Movies Rated</th>
+        <th>Number of logins</th>
+        <th>Last login date</th>
+        <th>Last login IP</th>
+    </tr>
+    @foreach (var userRatingInfo in Model.UserRatings)
+    {
+        <tr>
+            <td>@Html.ActionLink(userRatingInfo.Email, "UserStats", new { userId = userRatingInfo.UserId })</td>
+            <td>@userRatingInfo.Name</td>
+            <td class="centered">@userRatingInfo.NumberOfRatedMovies</td>
+            <td class="centered">@userRatingInfo.NumberOfLogins</td>
+            <td>@userRatingInfo.LastLoginDate</td>
+            <td>@userRatingInfo.LastLoginIpAddress</td>
+        </tr>
+    }
+</table>

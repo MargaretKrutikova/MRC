@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewBag.Title</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        @Styles.Render("~/Content/css")
+        @Styles.Render("~/Content/themes/base/css")
+        
+        @Scripts.Render("~/bundles/modernizr")      
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/jqueryui")
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/selectedmenuitem")
+        <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+  
+    </head>
+    <body>
+        <header>
+            <div class="header-wrapper">
+                <div class="header-image" ></div> 
+                <div class="movie-header">
+                    <div class="float-left" style="padding-left:200px;">                                    
+                        <div class="site-title">@Html.ActionLink("Movie Rating Calculator", "Index", "Home")</div>
+                    </div>
+
+                    <div id="progress-section" class="progress-section">
+                        @if (Request.IsAuthenticated) {
+    
+                            @Scripts.Render("~/bundles/ratingstatus")
+
+                            <input type="hidden" id="user-rating-status-url" value="@Url.Action("GetUserRatingStatus")" />
+                            <div id="user-rating-status">
+                            </div>
+    
+                            <div id="progress-bar-container">
+                                <div id="progress-bar"></div>
+                                @*<div style="position:absolute;border:1px dashed black;width:100px;height:20px;background-color:#FFEE00;"></div>*@
+                                <div id="filled-in-div">
+                                    <span id="rated-films-count"></span>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+
+                    <div class="float-right">
+                        <section id="login">
+                            @Html.Partial("_LoginPartial")
+                        </section>
+                        <div >
+                            <nav >
+                                <ul id="menu">
+                                    <li >@Html.ActionLink("Search", "SearchMovies", "Home", new { act = "search"}, null)</li>                            
+                                    <li >@Html.ActionLink("Suggested movies", "SearchMovies", "Home", new { act = "suggest" }, null)</li>
+                                    <li >@Html.ActionLink("My rated movies", "RatedMovies", "Home")</li>
+                                    <li >@Html.ActionLink("Recommended movies", "RecommendMovies", "Home")</li>
+                                </ul>
+                            </nav>
+                        </div>  
+                    </div>                 
+                </div>
+            </div>
+        </header>
+      
+        <div id="body">
+            
+                @RenderSection("featured", required: false)
+          
+            <section class="content-wrapper main-content clear-fix" style="min-height: 500px;">
+                <iframe src="//www.facebook.com/plugins/likebox.php?href=http%3A%2F%2Fwww.facebook.com%2Fmovieratingcalculator&amp;width=200&amp;height=62&amp;show_faces=false&amp;colorscheme=light&amp;stream=false&amp;border_color&amp;header=false" 
+                scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:200px; height:100px; position: absolute; right: 0;" allowTransparency="true"></iframe>
+               
+                @RenderBody()
+            </section>
+        </div>
+      
+        @*<footer>
+            <div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year - Movie Rating Calculator</p>
+                </div>
+            </div>
+        </footer>*@
+
+        
+        @RenderSection("scripts", required: false)
+    </body>
+</html>
